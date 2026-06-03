@@ -1,0 +1,29 @@
+:root {
+  --host-primary: #6366f1;
+  --host-primary-dark: #4f46e5;
+  --host-bg: #f8fafc;
+  --host-surface: #ffffff;
+  --host-border: #e2e8f0;
+  --host-text: #0f172a;
+  --host-text-muted: #64748b;
+  --health-healthy: #22c55e;
+  --health-degraded: #f59e0b;
+  --health-down: #ef4444;
+  --health-unknown: #94a3b8;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: var(--host-text);
+  background: var(--host-bg);
+  height: 100%;
+}
+
+#root, app-root { display: block; min-height: 100%; }
+
+a { color: var(--host-primary); text-decoration: none; }
+a:hover { text-decoration: underline; }
