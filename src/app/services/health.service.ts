@@ -2,8 +2,8 @@ import { DestroyRef, Injectable, computed, inject, signal } from '@angular/core'
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Subscription, interval, startWith } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { DynamicNexusService } from './dynamic-nexus.service';
-import type { RemoteHealthStatus } from '../types/remote-config';
+import { DynamicNexusService } from '@bimo-dk/nexus-runtime';
+import type { RemoteHealthStatus } from '@bimo-dk/nexus-core';
 
 @Injectable({ providedIn: 'root' })
 export class HealthService {
@@ -48,7 +48,7 @@ export class HealthService {
       for (const r of results) {
         const before = next.get(r.name);
         if (before !== r.status) {
-          console.log(`[health] ${r.name}: ${before ?? 'unknown'} âae’ ${r.status} @ ${new Date().toISOString()}`);
+          console.log(`[health] ${r.name}: ${before ?? 'unknown'} -> ${r.status} @ ${new Date().toISOString()}`);
         }
         next.set(r.name, r.status);
       }

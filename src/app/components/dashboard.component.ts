@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { DynamicNexusService } from '../services/dynamic-nexus.service';
+import { DynamicNexusService } from '@bimo-dk/nexus-runtime';
 import { HealthService } from '../services/health.service';
 
 @Component({

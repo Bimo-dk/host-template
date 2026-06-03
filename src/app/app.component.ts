@@ -1,8 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-import { DynamicNexusService } from './services/dynamic-nexus.service';
-import { RegistryService } from './services/registry.service';
+import { DynamicNexusService, RegistryService } from '@bimo-dk/nexus-runtime';
 import { HealthService } from './services/health.service';
 
 @Component({
