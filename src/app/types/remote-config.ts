@@ -1,5 +1,5 @@
-// MIGRATION: alle typer kommer nu fra @bimo-dk/nexus-core.
-// Denne fil re-eksporterer for at undgå at ændre alle imports i host's source — ny kode bør importere direkte fra '@bimo-dk/nexus-core'.
+// MIGRATION: all types now come from @bimo-dk/nexus-core.
+// This file re-exports to avoid changing all imports in the host's source — new code should import directly from '@bimo-dk/nexus-core'.
 export type {
   RemoteHealthStatus,
   RemoteConfig,

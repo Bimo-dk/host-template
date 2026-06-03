@@ -9,14 +9,14 @@ import { HealthService } from '../services/health.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <section class="dashboard">
-      <h2>Velkommen til Nexus host shell</h2>
-      <p class="lead">Vælg en remote i sidebaren for at indlæse en micro frontend.</p>
+      <h2>Welcome to the Nexus host shell</h2>
+      <p class="lead">Select a remote in the sidebar to load a micro frontend.</p>
 
       @if (nexus.loadedRemotes().length === 0) {
         <div class="empty">
-          <h3>Ingen remotes registreret endnu</h3>
-          <p>Host modtager opdateringer fra registry via WebSocket.
-            Tilføj en remote via manager-app'en på <code>http://localhost:8669</code>.</p>
+          <h3>No remotes registered yet</h3>
+          <p>Host receives updates from the registry via WebSocket.
+            Add a remote via the manager app at <code>http://localhost:8669</code>.</p>
         </div>
       } @else {
         <div class="stats">
@@ -36,7 +36,7 @@ import { HealthService } from '../services/health.service';
           </article>
         </div>
 
-        <h3>Tilgængelige remotes</h3>
+        <h3>Available remotes</h3>
         <ul class="remote-list">
           @for (r of nexus.loadedRemotes(); track r.name) {
             <li>

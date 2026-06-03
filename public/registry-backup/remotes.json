@@ -1,5 +1,5 @@
 {
-  "_comment": "Statisk backup brugt af host hvis både registry API og localStorage cache er utilgængelige. Skal opdateres manuelt eller via CI/CD når set af kendte stabile remotes ændres.",
+  "_comment": "Static backup used by host if both registry API and localStorage cache are unavailable. Must be updated manually or via CI/CD when the set of known stable remotes changes.",
   "snapshotAt": "2026-06-03T00:00:00.000Z",
   "remotes": [
     {

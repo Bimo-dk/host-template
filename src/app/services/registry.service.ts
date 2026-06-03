@@ -16,16 +16,16 @@ export class RegistryService {
   private readonly http = inject(HttpClient);
   private readonly baseUrl = `${environment.registryUrl}/remotes`;
 
-  // True hvis seneste HTTP-fetch lykkedes. Bruges af DynamicFederationService til online-status.
+  // True if the latest HTTP fetch succeeded. Used by DynamicFederationService for online status.
   readonly lastFetchOk = signal<boolean>(true);
   readonly lastSource = signal<'live' | 'cache' | 'backup' | 'empty'>('live');
 
   /**
-   * Henter aktive remotes med fallback-kæde:
-   *   1. Live API-kald til registry
-   *   2. localStorage cache (max 24t gammel)
-   *   3. Statisk backup-fil serveret af host's nginx
-   *   4. Tom liste
+   * Fetch enabled remotes with a fallback chain:
+   *   1. Live API call to registry
+   *   2. localStorage cache (max 24h old)
+   *   3. Static backup file served by host's nginx
+   *   4. Empty list
    */
   getEnabledRemotes(): Observable<RemoteConfig[]> {
     return this.http.get<RegistryResponse>(this.baseUrl).pipe(
@@ -38,7 +38,7 @@ export class RegistryService {
       catchError((err: HttpErrorResponse) => {
         this.lastFetchOk.set(false);
         console.error(
-          `[registry] Live fetch failed (status=${err.status}). Trying cache → backup.`,
+          `[registry] Live fetch failed (status=${err.status}). Trying cache -> backup.`,
         );
         return this.fallbackChain();
       }),

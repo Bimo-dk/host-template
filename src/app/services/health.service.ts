@@ -48,7 +48,7 @@ export class HealthService {
       for (const r of results) {
         const before = next.get(r.name);
         if (before !== r.status) {
-          console.log(`[health] ${r.name}: ${before ?? 'unknown'} â†’ ${r.status} @ ${new Date().toISOString()}`);
+          console.log(`[health] ${r.name}: ${before ?? 'unknown'} âae’ ${r.status} @ ${new Date().toISOString()}`);
         }
         next.set(r.name, r.status);
       }

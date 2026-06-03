@@ -5,7 +5,7 @@ const SESSION_ID = generateSessionId();
 let requestCounter = 0;
 
 function generateSessionId(): string {
-  // Korte 8-tegns session ID — nok til at adskille browser-faner inden for samme dag
+  // Short 8-char session ID — enough to distinguish browser tabs within the same day
   const cryptoObj = globalThis.crypto;
   if (cryptoObj && typeof cryptoObj.randomUUID === 'function') {
     return cryptoObj.randomUUID().substring(0, 8);
@@ -25,7 +25,7 @@ export const correlationIdInterceptor: HttpInterceptorFn = (req, next) => {
       error: (err: unknown) => {
         if (err instanceof HttpErrorResponse) {
           console.error(
-            `[http] FAILED ${req.method} ${req.url} → ${err.status} (X-Request-ID=${correlationId})`,
+            `[http] FAILED ${req.method} ${req.url} -> ${err.status} (X-Request-ID=${correlationId})`,
             err.error,
           );
         }

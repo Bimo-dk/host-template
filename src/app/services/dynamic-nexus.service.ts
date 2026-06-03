@@ -22,7 +22,7 @@ export class DynamicNexusService {
   readonly loadedRemotes = signal<RemoteConfig[]>([]);
   readonly failedRemotes = signal<Map<string, string>>(new Map());
 
-  // Online = enten WebSocket forbundet, ELLER seneste HTTP-fetch lykkedes
+  // Online = WebSocket connected OR the latest HTTP fetch succeeded
   readonly registryOnline = computed(() => this.ws.connected() || this.registry.lastFetchOk());
 
   private initStarted = false;
@@ -43,7 +43,7 @@ export class DynamicNexusService {
       console.error('[nexus] Initial sync failed:', err);
     }
 
-    // 2. Subscribe på WebSocket-broadcasts fra registry
+    // 2. Subscribe to WebSocket broadcasts from registry
     this.ws.remotesChanged$
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((remotes) => {
@@ -53,7 +53,7 @@ export class DynamicNexusService {
         );
       });
 
-    // 3. Åbn WebSocket-forbindelsen (med auto-reconnect indbygget)
+    // 3. Open the WebSocket connection (auto-reconnect built in)
     this.ws.connect(buildWsUrl(environment.registryWsPath));
   }
 

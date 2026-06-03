@@ -15,9 +15,9 @@ import { HealthService } from './services/health.service';
       @if (!nexus.registryOnline()) {
         <div class="offline-banner">
           <span class="icon">⚠</span>
-          <strong>Registry offline</strong> — viser data fra
+          <strong>Registry offline</strong> — showing data from
           <code>{{ registry.lastSource() }}</code>
-          (cache eller statisk backup). Nye remotes kan ikke registreres før forbindelsen genoprettes.
+          (cache or static backup). New remotes cannot be registered until the connection is restored.
         </div>
       }
 
@@ -41,7 +41,7 @@ import { HealthService } from './services/health.service';
           <h3>Remotes</h3>
 
           @if (nexus.loadedRemotes().length === 0) {
-            <p class="empty-side">Ingen aktive remotes.</p>
+            <p class="empty-side">No active remotes.</p>
           }
 
           <ul>
@@ -56,7 +56,7 @@ import { HealthService } from './services/health.service';
           </ul>
 
           @if (nexus.failedRemotes().size > 0) {
-            <h4>Fejlede remotes</h4>
+            <h4>Failed remotes</h4>
             <ul class="failed">
               @for (entry of failedRemotesList(); track entry.name) {
                 <li title="{{ entry.error }}">

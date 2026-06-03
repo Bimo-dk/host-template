@@ -9,8 +9,8 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    // Bruges kun når host kører standalone — når host loades ind i app's runtime
-    // (production), så er app's appConfig den effective config.
+    // Used only when host runs standalone — when host is loaded into app's runtime
+    // (production), app's appConfig is the effective config.
     provideHttpClient(withInterceptors([nexusAuthInterceptor, correlationIdInterceptor])),
   ],
 };
