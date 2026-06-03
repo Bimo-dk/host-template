@@ -1,15 +1,17 @@
+# syntax=docker/dockerfile:1.7
 # ============================================================================
 # host-template — Bimo-Nexus layout shell
-# Bygges fra repoets EGEN rod, pakker fra GitHub Packages.
+# Bruger BuildKit secrets så NODE_AUTH_TOKEN IKKE leakes i build-logs.
 # ============================================================================
 
 FROM node:22-alpine AS builder
 WORKDIR /app
 
-ARG NODE_AUTH_TOKEN
 COPY package*.json .npmrc ./
-RUN if [ -z "$NODE_AUTH_TOKEN" ]; then echo "NODE_AUTH_TOKEN build-arg er paakraevet"; exit 1; fi && \
-    NODE_AUTH_TOKEN=${NODE_AUTH_TOKEN} npm install --no-audit --no-fund --legacy-peer-deps
+
+RUN --mount=type=secret,id=node_auth_token,required=true \
+    NODE_AUTH_TOKEN=$(cat /run/secrets/node_auth_token) \
+    npm install --no-audit --no-fund --legacy-peer-deps
 
 ARG NEXUS_TOKEN=dev-token-change-in-production
 COPY tsconfig*.json angular.json federation.config.js ./
