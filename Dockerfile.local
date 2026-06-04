@@ -7,7 +7,7 @@ WORKDIR /app
 
 COPY package*.json ./
 RUN printf '@bimo-dk:registry=http://host.docker.internal:4873\nlegacy-peer-deps=true\n' > .npmrc
-RUN npm install --no-audit --no-fund --legacy-peer-deps
+RUN rm -f package-lock.json && npm install --no-audit --no-fund --legacy-peer-deps
 
 ARG NEXUS_TOKEN=dev-token
 COPY tsconfig*.json angular.json federation.config.js ./
@@ -17,7 +17,8 @@ COPY public ./public
 RUN node -e "const fs=require('fs'); const p='src/environments/environment.prod.ts'; let c=fs.readFileSync(p,'utf8'); c=c.replace('NEXUS_TOKEN_PLACEHOLDER', process.env.NEXUS_TOKEN || 'dev-token'); fs.writeFileSync(p,c);" \
   NEXUS_TOKEN=${NEXUS_TOKEN}
 
-RUN npm run build:prod
+RUN node -e "const fs=require('fs'),nm='/app/node_modules';const ck=d=>{try{const b=fs.readFileSync(d+'/package.json');if(b[0]===0xEF&&b[1]===0xBB&&b[2]===0xBF)console.log('BOM:',d);}catch(e){}};for(const a of fs.readdirSync(nm)){const ap=nm+'/'+a;if(a.startsWith('@')){try{for(const b of fs.readdirSync(ap)){ck(ap+'/'+b)}}catch(e){}}else{ck(ap)}}"
+RUN npm run build:prod || (find /tmp -name "angular-errors.log" -exec cat {} \; 2>/dev/null; exit 1)
 
 FROM nginx:alpine
 RUN apk add --no-cache wget
