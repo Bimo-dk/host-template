@@ -1,8 +1,7 @@
-import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-import { DynamicNexusService, RegistryService } from '@bimo-dk/nexus-runtime';
-import { HealthService } from './services/health.service';
+import { DynamicNexusService, HealthService, RegistryService } from '@bimo-dk/nexus-runtime';
 
 @Component({
   selector: 'app-root',
@@ -219,14 +218,10 @@ import { HealthService } from './services/health.service';
     `,
   ],
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   readonly nexus = inject(DynamicNexusService);
   readonly registry = inject(RegistryService);
   private readonly health = inject(HealthService);
-
-  ngOnInit(): void {
-    this.health.start();
-  }
 
   healthStatus(name: string): string {
     return this.health.remoteHealth().get(name) ?? 'unknown';

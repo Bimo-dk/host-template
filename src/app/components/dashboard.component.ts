@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { DynamicNexusService } from '@bimo-dk/nexus-runtime';
-import { HealthService } from '../services/health.service';
+import { DynamicNexusService, HealthService } from '@bimo-dk/nexus-runtime';
 
 @Component({
   selector: 'app-dashboard',
