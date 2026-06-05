@@ -24,14 +24,16 @@ RUN node -e "const fs=require('fs'); const p='src/environments/environment.prod.
 RUN npm run build:prod
 
 FROM nginx:alpine
-RUN apk add --no-cache wget
+RUN apk add --no-cache wget curl jq
 
 COPY --from=builder /app/dist/host/browser /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY docker-entrypoint.sh /docker-entrypoint.sh
+RUN chmod +x /docker-entrypoint.sh
 
 EXPOSE 80
 
-HEALTHCHECK --interval=30s --timeout=10s --start-period=15s --retries=3 \
+HEALTHCHECK --interval=30s --timeout=10s --start-period=20s --retries=3 \
   CMD wget -qO- http://localhost/health || exit 1
 
-CMD ["nginx", "-g", "daemon off;"]
+ENTRYPOINT ["/docker-entrypoint.sh"]
