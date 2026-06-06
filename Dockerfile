@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1.7
 # ============================================================================
 # host-template — Bimo-Nexus layout shell
-# Bruger BuildKit secrets så NODE_AUTH_TOKEN IKKE leakes i build-logs.
+# @bimo-dk/* packages are public on npmjs.com — no auth required.
 # ============================================================================
 
 FROM node:22-alpine AS builder
@@ -9,9 +9,7 @@ WORKDIR /app
 
 COPY package*.json .npmrc ./
 
-RUN --mount=type=secret,id=node_auth_token,required=true \
-    NODE_AUTH_TOKEN=$(cat /run/secrets/node_auth_token) \
-    npm install --no-audit --no-fund --legacy-peer-deps
+RUN npm install --no-audit --no-fund --legacy-peer-deps
 
 ARG NEXUS_TOKEN=dev-token-change-in-production
 COPY tsconfig*.json angular.json federation.config.js ./
@@ -34,6 +32,6 @@ RUN chmod +x /docker-entrypoint.sh
 EXPOSE 80
 
 HEALTHCHECK --interval=30s --timeout=10s --start-period=20s --retries=3 \
-  CMD wget -qO- http://localhost/health || exit 1
+  CMD wget -qO- http://127.0.0.1/health || exit 1
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
