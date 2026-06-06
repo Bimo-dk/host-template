@@ -37,7 +37,7 @@ elif [ "$HTTP_CODE" = "409" ]; then
   HOST_ID=$(curl -sf \
     -H "X-Nexus-Token: ${NEXUS_TOKEN}" \
     "${REGISTRY_URL}/api/hosts" | \
-    jq -r '.[] | select(.name == "'"${HOST_NAME}"'") | .id' | head -1)
+    jq -r '.hosts[] | select(.name == "'"${HOST_NAME}"'") | .id' | head -1)
   if [ -n "$HOST_ID" ]; then
     curl -sf -X PUT \
       -H "Content-Type: application/json" \
